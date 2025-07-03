@@ -1,1 +1,1 @@
-# Surrogate_model_guids_optimal_neural_stimulation
+# Surrogate_model_guides_optimal_neural_stimulation
