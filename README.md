@@ -1,1 +1,2 @@
 # Surrogate_model_guides_optimal_neural_stimulation
+data driven surrogate guides optimal neural stimulation
