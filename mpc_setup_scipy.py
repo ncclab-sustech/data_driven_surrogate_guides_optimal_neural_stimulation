@@ -4,7 +4,7 @@ from scipy.optimize import minimize, LinearConstraint
 import time
 
 class my_mpc():
-    # emit_optimal_input_ = pyqtSignal(bool)   # 发送bool变量表示已经生成了最优刺激信号
+    # emit_optimal_input_ = pyqtSignal(bool)
     def __init__(self,model_params=None,
                  predict_length=6,
                  control_length=5,

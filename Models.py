@@ -7,7 +7,7 @@ import math
 
 class EI_RNN(nn.Module):
     def __init__(self, 
-                 input_size,    #  
+                 input_size,    # dimension of external input 
                  hidden_size,   # hidden dimension
                  output_size,   # observe dimension
                  fr_type=False, # transform neural state to neural firing rate by r(t)=relu(x(t))
@@ -170,18 +170,17 @@ class Wilson_Cowan(nn.Module):
         hidden_ = torch.permute(hidden,(0,2,1)) # batch*hidden*time
         inputs_ = torch.permute(inputs,(0,2,1)) # batch*input_size*time
 
-        E = hidden_[:,:self.num_regions,:]  # 兴奋性神经元的活动
-        I = hidden_[:,self.num_regions:,:]  # 抑制性神经元的活动
+        E = hidden_[:,:self.num_regions,:]  # activity of excitatory neurons
+        I = hidden_[:,self.num_regions:,:]  # activity of inhibitory neurons
         
-        # 兴奋性神经元活动
-        # print(self.B.shape,inputs_.shape)
+       
         input_E = self.W_EE @ E - self.W_EI @ I + self.B@inputs_
         E = E+self.dt*(-E + (1 - self.r * E) * self.sigmoid(input_E, self.E_a, self.E_theta)) / self.E_tau
-        
-        # 抑制性神经元活动
+
         input_I =self.W_IE @ E - self.W_II @ I
         I =I+self.dt* (-I + (1 - self.r * I) * self.sigmoid(input_I, self.I_a, self.I_theta)) / self.I_tau
-        # print(I.shape,E.shape)
+
+
         output = 3*self.softplus(self.C@E)
         hidden_[:,:self.num_regions,:] = E
         hidden_[:,self.num_regions:,:] = I
